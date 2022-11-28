@@ -33,7 +33,6 @@ public class WordCompare : MonoBehaviour
     private void FirstCompare(List<char> guess, List<char> target)
     {
         int count = 0;
-        _greenIndexList.Clear();
         for (int i = 0; i < target.Count; i++)
         {
             if (target[i] == guess[i])
@@ -90,6 +89,8 @@ public class WordCompare : MonoBehaviour
     {
         List<char> guessList = StringToCharList(guess);
         List<char> targetList = StringToCharList(target);
+        _greenIndexList.Clear();
+        _yellowIndexList.Clear();
         FirstCompare(guessList, targetList);
         if (_haveWon)
         {
