@@ -12,6 +12,7 @@ public class WordManager : MonoBehaviour
     [SerializeField] private TextBoxScript _boxScript5;
 
     [Header("Other")]
+    [SerializeField] private string _targetTest = "testa";
     [SerializeField] private int _rowIndex;
     List<TextBoxScript> _rowList = new List<TextBoxScript>();
 
@@ -35,7 +36,6 @@ public class WordManager : MonoBehaviour
             _currentGuess += c;
         }
         _rowList[_rowIndex].AddText(char.ToUpper(c));
-        Debug.Log(_currentGuess);
     }
     public void RemoveFromString()
     {
@@ -44,13 +44,14 @@ public class WordManager : MonoBehaviour
             _currentGuess = _currentGuess.Remove(_currentGuess.Length - 1, 1);
         }
         _rowList[_rowIndex].RemoveText();
-        Debug.Log(_currentGuess);
     }
 
     public void EnterPressed()
     {
         if (_rowIndex < _rowList.Count -1 && _rowList[_rowIndex].CheckFull())
         {
+            WordCompare.Instance.Compare(_currentGuess, _targetTest);
+            _rowList[_rowIndex].ColorBoxes(WordCompare.Instance.GetGreens(), WordCompare.Instance.GetYellows());
             _rowIndex++;
             _currentGuess = "";
         }

@@ -4,29 +4,26 @@ using UnityEngine;
 
 public class WordCompare : MonoBehaviour
 {
-    [SerializeField] private string _targetTest = "testa";
-    [SerializeField] private string _guessTest = "testa";
-    List<char> _triedLetters = new List<char>();
-    List<char> _targetList = new List<char>();
-    List<char> _guessList = new List<char>();
+    private static WordCompare _instance;
+    public static WordCompare Instance { get { return _instance; } }
 
-    private void Start()
+    List<int> _greenIndexList = new List<int>();
+    List<int> _yellowIndexList = new List<int>();
+    List<char> _triedLetters = new List<char>();
+    private bool _haveWon = false;
+
+    private void Awake()
     {
-        _targetList = StringToCharList(_targetTest);
-        _guessList = StringToCharList(_guessTest);
-        Compare(_guessList, _targetList);
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
     }
 
-
-    //private char[] StringToCharArray(string word)
-    //{
-    //    char[] array = new char[5];
-    //    for (int i = 0; i < word.Length; i++)
-    //    {
-    //        array[i] = word[i];
-    //    }
-    //    return array;
-    //}
     private List<char> StringToCharList(string word)
     {
         List<char> list = new List<char>();
@@ -35,44 +32,87 @@ public class WordCompare : MonoBehaviour
     }
     private void FirstCompare(List<char> guess, List<char> target)
     {
+        int count = 0;
+        _greenIndexList.Clear();
         for (int i = 0; i < target.Count; i++)
         {
             if (target[i] == guess[i])
             {
-                Debug.Log("Rätt: " + guess[i]);
+                Debug.Log("Rätt: " + i);
                 _triedLetters.Add(target[i]);
+                _greenIndexList.Add(i);
                 target[i] = '+';
                 guess[i] = '-';
+                count++; ;
             }
+        }
+        if (count == 5)
+        {
+            _haveWon = true;
         }
     }
     private void SecondCompare(List<char> guess, List<char> target)
     {
-        foreach (char c in guess)
+        foreach (char c in target)
         {
-            SmallCompare(c, target);
+            SmallCompare(guess, c);
         }
     }
-    private void SmallCompare(char guess, List<char> target)
+    private void SmallCompare(List<char> guess, char target)
     {
-        for (int i = 0; i < target.Count; i++)
+        for (int i = 0; i < guess.Count; i++)
         {
-            if (guess == target[i])
+            if (target == guess[i])
             {
-                target[i] = '+';
-                Debug.Log("Nästan rätt: " + guess);
+                guess[i] = '_';
+                _yellowIndexList.Add(i);
+                Debug.Log("Nästan rätt: " + i);
                 break;
             }
         }
     }
 
-    public void Compare(List<char> guess, List<char> target)
-    {
-        List<char> guessList = guess;
-        List<char> targetList = target;
-        FirstCompare(guessList, targetList);
-        SecondCompare(guessList, targetList);
+    //private void SmallCompare(char guess, List<char> target)
+    //{
+    //    for (int i = 0; i < target.Count; i++)
+    //    {
+    //        if (guess == target[i])
+    //        {
+    //            target[i] = '+';
+    //            Debug.Log("Nästan rätt: " + guess);
+    //            break;
+    //        }
+    //    }
+    //}
 
+
+    public void Compare(string guess, string target)
+    {
+        List<char> guessList = StringToCharList(guess);
+        List<char> targetList = StringToCharList(target);
+        FirstCompare(guessList, targetList);
+        if (_haveWon)
+        {
+            Debug.Log("You Win");
+        }
+        else
+        {
+            SecondCompare(guessList, targetList);
+            Debug.Log("You Lose");
+        }
+    }
+
+    public List<int> GetGreens()
+    {
+        return _greenIndexList;
+    }
+    public List<int> GetYellows()
+    {
+        return _yellowIndexList;
+    }
+    public bool CheckWin()
+    {
+        return _haveWon;
     }
 
 }

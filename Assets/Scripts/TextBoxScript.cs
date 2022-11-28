@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TextBoxScript : MonoBehaviour
@@ -12,12 +13,8 @@ public class TextBoxScript : MonoBehaviour
     [SerializeField] private GameObject _textBox4;
     [SerializeField] private GameObject _textBox5;
 
-
-    [Header ("Other")]
-    [SerializeField] private string empty = "";
-    [SerializeField] private int _boxIndex;
-
     List<GameObject> _boxList = new List<GameObject>();
+    private int _boxIndex;
 
     private void Start()
     {
@@ -28,6 +25,10 @@ public class TextBoxScript : MonoBehaviour
         _boxList.Add(_textBox5);
     }
 
+    private void ColorChanger(GameObject obj, Color color)
+    {
+        obj.GetComponent<Image>().color = color;
+    }
 
     public void AddText(char c)
     {
@@ -46,8 +47,28 @@ public class TextBoxScript : MonoBehaviour
         {
             _boxIndex--;
             TextMeshProUGUI boxtext = _boxList[_boxIndex].GetComponentInChildren<TextMeshProUGUI>();
-            boxtext.text = empty;
+            boxtext.text = "";
 
+        }
+    }
+    public void ColorBoxes(List<int> greenList, List<int> yellowList)
+    {
+        int currentIndex = 0;
+        foreach (GameObject box in _boxList)
+        {
+            if (greenList.Contains(currentIndex))
+            {
+                ColorChanger(box, Color.green);
+            }
+            else if (yellowList.Contains(currentIndex))
+            {
+                ColorChanger(box, Color.yellow);
+            }
+            else
+            {
+                ColorChanger(box, Color.grey);
+            }
+            currentIndex++;
         }
     }
     public bool CheckFull()
