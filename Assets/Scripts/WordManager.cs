@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WordManager : MonoBehaviour
 {
-    [Header ("Scripts")]
+    [Header ("Rows")]
     [SerializeField] private TextBoxScript _boxScript1;
     [SerializeField] private TextBoxScript _boxScript2;
     [SerializeField] private TextBoxScript _boxScript3;
@@ -12,10 +13,10 @@ public class WordManager : MonoBehaviour
     [SerializeField] private TextBoxScript _boxScript5;
 
     [Header("Other")]
+    [SerializeField] private KeyBoardColoring _keyBoardColoring;
     [SerializeField] private string _targetTest = "testa";
     [SerializeField] private int _rowIndex;
     List<TextBoxScript> _rowList = new List<TextBoxScript>();
-
     private string _currentGuess = "";
 
 
@@ -28,6 +29,47 @@ public class WordManager : MonoBehaviour
         _rowList.Add(_boxScript5);
 
     }
+    private void ColorChanger(GameObject obj, Color color)
+    {
+        obj.GetComponent<Image>().color = color;
+    }
+    private void ColorBoxes(List<GameObject> boxes, List<int> greenList, List<int> yellowList)
+    {
+        int currentIndex = 0;
+        foreach (GameObject box in boxes)
+        {
+            if (greenList.Contains(currentIndex))
+            {
+                ColorChanger(box, Color.green);
+            }
+            else if (yellowList.Contains(currentIndex))
+            {
+                ColorChanger(box, Color.yellow);
+            }
+            else
+            {
+                ColorChanger(box, Color.grey);
+            }
+            currentIndex++;
+        }
+    }
+    private void ColorKeys(List<GameObject> green, List<GameObject> yellow, List<GameObject> grey)
+    {
+        foreach (GameObject key in grey)
+        {
+            ColorChanger(key, Color.grey);
+        }
+        foreach (GameObject key in yellow)
+        {
+            ColorChanger(key, Color.yellow);
+        }
+        foreach (GameObject key in green)
+        {
+            ColorChanger(key, Color.green);
+        }
+    }
+
+
 
     public void AddToString(char c)
     {
@@ -35,7 +77,7 @@ public class WordManager : MonoBehaviour
         {
             _currentGuess += c;
         }
-        _rowList[_rowIndex].AddText(char.ToUpper(c));
+        _rowList[_rowIndex].AddText(c);
     }
     public void RemoveFromString()
     {
@@ -48,12 +90,26 @@ public class WordManager : MonoBehaviour
 
     public void EnterPressed()
     {
-        if (_rowIndex < _rowList.Count -1 && _rowList[_rowIndex].CheckFull())
+        if (_rowList[_rowIndex].CheckFull())
         {
             WordCompare.Instance.Compare(_currentGuess, _targetTest);
-            _rowList[_rowIndex].ColorBoxes(WordCompare.Instance.GetGreens(), WordCompare.Instance.GetYellows());
+            ColorBoxes(_rowList[_rowIndex].GetBoxList(), WordCompare.Instance.GetGreenIndex(), WordCompare.Instance.GetYellowIndex());
+            ColorKeys(_keyBoardColoring.GreenList(), _keyBoardColoring.YellowList(), _keyBoardColoring.GreyList());
+        }
+
+        if (WordCompare.Instance.CheckWin())
+        {
+            Debug.Log("You Win");
+
+        }
+        else if (_rowIndex < _rowList.Count - 1)
+        {
             _rowIndex++;
             _currentGuess = "";
+        }
+        else
+        {
+            Debug.Log("You Lose");
         }
     }
 }

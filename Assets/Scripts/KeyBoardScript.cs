@@ -10,132 +10,132 @@ public class KeyBoardScript : MonoBehaviour
   
     public void A_Click()
     {
-        char click = 'a';
+        char click = 'A';
         _wordManager.AddToString(click);
     }
     public void B_Click()
     {
-        char click = 'b';
+        char click = 'B';
         _wordManager.AddToString(click);
     }
     public void C_Click()
     {
-        char click = 'c';
+        char click = 'C';
         _wordManager.AddToString(click);
     }
     public void D_Click()
     {
-        char click = 'd';
+        char click = 'D';
         _wordManager.AddToString(click);
     }
     public void E_Click()
     {
-        char click = 'e';
+        char click = 'E';
         _wordManager.AddToString(click);
     }
     public void F_Click()
     {
-        char click = 'f';
+        char click = 'F';
         _wordManager.AddToString(click);
     }
     public void G_Click()
     {
-        char click = 'g';
+        char click = 'G';
         _wordManager.AddToString(click);
     }
     public void H_Click()
     {
-        char click = 'h';
+        char click = 'H';
         _wordManager.AddToString(click);
     }
     public void I_Click()
     {
-        char click = 'i';
+        char click = 'I';
         _wordManager.AddToString(click);
     }
     public void J_Click()
     {
-        char click = 'j';
+        char click = 'J';
         _wordManager.AddToString(click);
     }
     public void K_Click()
     {
-        char click = 'k';
+        char click = 'K';
         _wordManager.AddToString(click);
     }
     public void L_Click()
     {
-        char click = 'l';
+        char click = 'L';
         _wordManager.AddToString(click);
     }
     public void M_Click()
     {
-        char click = 'm';
+        char click = 'M';
         _wordManager.AddToString(click);
     }
     public void N_Click()
     {
-        char click = 'n';
+        char click = 'N';
         _wordManager.AddToString(click);
     }
     public void O_Click()
     {
-        char click = 'o';
+        char click = 'O';
         _wordManager.AddToString(click);
     }
     public void P_Click()
     {
-        char click = 'p';
+        char click = 'P';
         _wordManager.AddToString(click);
     }
     public void Q_Click()
     {
-        char click = 'q';
+        char click = 'Q';
         _wordManager.AddToString(click);
     }
     public void R_Click()
     {
-        char click = 'r';
+        char click = 'R';
         _wordManager.AddToString(click);
     }
     public void S_Click()
     {
-        char click = 's';
+        char click = 'S';
         _wordManager.AddToString(click);
     }
     public void T_Click()
     {
-        char click = 't';
+        char click = 'T';
         _wordManager.AddToString(click);
     }
     public void U_Click()
     {
-        char click = 'u';
+        char click = 'U';
         _wordManager.AddToString(click);
     }
     public void V_Click()
     {
-        char click = 'v';
+        char click = 'V';
         _wordManager.AddToString(click);
     }
     public void W_Click()
     {
-        char click = 'w';
+        char click = 'W';
         _wordManager.AddToString(click);
     }
     public void X_Click()
     {
-        char click = 'x';
+        char click = 'X';
         _wordManager.AddToString(click);
     }
     public void Y_Click()
     {
-        char click = 'y';
+        char click = 'Y';
         _wordManager.AddToString(click);
     }
     public void Z_Click()
     {
-        char click = 'z';
+        char click = 'Z';
         _wordManager.AddToString(click);
     }
 

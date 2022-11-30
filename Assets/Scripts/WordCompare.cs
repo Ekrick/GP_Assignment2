@@ -7,10 +7,17 @@ public class WordCompare : MonoBehaviour
     private static WordCompare _instance;
     public static WordCompare Instance { get { return _instance; } }
 
+    //Box Coloring
     List<int> _greenIndexList = new List<int>();
     List<int> _yellowIndexList = new List<int>();
-    List<char> _triedLetters = new List<char>();
+
+    //Keyboard Coloring
+    HashSet<char> _greenLetters = new HashSet<char>();
+    HashSet<char> _yellowLetters = new HashSet<char>();
+    HashSet<char> _greyLetters = new HashSet<char>();
+
     private bool _haveWon = false;
+
 
     private void Awake()
     {
@@ -27,7 +34,10 @@ public class WordCompare : MonoBehaviour
     private List<char> StringToCharList(string word)
     {
         List<char> list = new List<char>();
-        list.AddRange(word);
+        foreach (char c in word)
+        {
+            list.Add(char.ToUpper(c));
+        }
         return list;
     }
     private void FirstCompare(List<char> guess, List<char> target)
@@ -37,8 +47,7 @@ public class WordCompare : MonoBehaviour
         {
             if (target[i] == guess[i])
             {
-                Debug.Log("Rätt: " + i);
-                _triedLetters.Add(target[i]);
+                _greenLetters.Add(guess[i]);
                 _greenIndexList.Add(i);
                 target[i] = '+';
                 guess[i] = '-';
@@ -63,27 +72,13 @@ public class WordCompare : MonoBehaviour
         {
             if (target == guess[i])
             {
-                guess[i] = '_';
+                _yellowLetters.Add(guess[i]);
                 _yellowIndexList.Add(i);
-                Debug.Log("Nästan rätt: " + i);
+                guess[i] = '_';
                 break;
             }
         }
     }
-
-    //private void SmallCompare(char guess, List<char> target)
-    //{
-    //    for (int i = 0; i < target.Count; i++)
-    //    {
-    //        if (guess == target[i])
-    //        {
-    //            target[i] = '+';
-    //            Debug.Log("Nästan rätt: " + guess);
-    //            break;
-    //        }
-    //    }
-    //}
-
 
     public void Compare(string guess, string target)
     {
@@ -91,26 +86,40 @@ public class WordCompare : MonoBehaviour
         List<char> targetList = StringToCharList(target);
         _greenIndexList.Clear();
         _yellowIndexList.Clear();
-        FirstCompare(guessList, targetList);
-        if (_haveWon)
+
+        foreach (char c in guessList)
         {
-            Debug.Log("You Win");
+            _greyLetters.Add(c);
         }
-        else
+
+        FirstCompare(guessList, targetList);
+        if (!_haveWon)
         {
             SecondCompare(guessList, targetList);
-            Debug.Log("You Lose");
         }
     }
 
-    public List<int> GetGreens()
+    public List<int> GetGreenIndex()
     {
         return _greenIndexList;
     }
-    public List<int> GetYellows()
+    public List<int> GetYellowIndex()
     {
         return _yellowIndexList;
     }
+    public HashSet<char> GetGreenLetters()
+    {
+        return _greenLetters;
+    }
+    public HashSet<char> GetYellowLetters()
+    {
+        return _yellowLetters;
+    }
+    public HashSet<char> GetGreyLetters()
+    {
+        return _greyLetters;
+    }
+
     public bool CheckWin()
     {
         return _haveWon;
