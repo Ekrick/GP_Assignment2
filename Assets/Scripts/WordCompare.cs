@@ -34,7 +34,8 @@ public class WordCompare : MonoBehaviour
     private List<char> StringToCharList(string word)
     {
         List<char> list = new List<char>();
-        foreach (char c in word)
+        string cleaned = word.Trim('\n', '\r', '\t');
+        foreach (char c in cleaned)
         {
             list.Add(char.ToUpper(c));
         }

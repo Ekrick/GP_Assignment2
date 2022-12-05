@@ -1931,8 +1931,9 @@ GameObject:
   m_Component:
   - component: {fileID: 578071412}
   - component: {fileID: 578071411}
+  - component: {fileID: 578071413}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WordCompare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1965,6 +1966,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &578071413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578071410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd590267c2d0a44a8f4b5a1f809f6a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wordFile: {fileID: 0}
+  _wordArray: []
 --- !u!1 &590282162 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5593563907848002585, guid: 99cfd645257a0f14eb58abf47d3cedf8, type: 3}
@@ -6927,7 +6942,8 @@ MonoBehaviour:
   _boxScript4: {fileID: 1395800144}
   _boxScript5: {fileID: 177285479}
   _keyBoardColoring: {fileID: 94411083}
-  _targetTest: testa
+  _randomWordSelect: {fileID: 578071413}
+  _targetWord: apple
   _rowIndex: 0
 --- !u!1001 &2062937796
 PrefabInstance:

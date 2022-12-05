@@ -14,7 +14,8 @@ public class WordManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private KeyBoardColoring _keyBoardColoring;
-    [SerializeField] private string _targetTest = "testa";
+    [SerializeField] private RandomWordSelect _randomWordSelect;
+    [SerializeField] private string _targetWord;
     [SerializeField] private int _rowIndex;
     List<TextBoxScript> _rowList = new List<TextBoxScript>();
     private string _currentGuess = "";
@@ -22,6 +23,7 @@ public class WordManager : MonoBehaviour
 
     private void Start()
     {
+        _targetWord = _randomWordSelect.RandomWord();
         _rowList.Add(_boxScript1);
         _rowList.Add(_boxScript2);
         _rowList.Add(_boxScript3);
@@ -92,7 +94,7 @@ public class WordManager : MonoBehaviour
     {
         if (_rowList[_rowIndex].CheckFull())
         {
-            WordCompare.Instance.Compare(_currentGuess, _targetTest);
+            WordCompare.Instance.Compare(_currentGuess, _targetWord);
             ColorBoxes(_rowList[_rowIndex].GetBoxList(), WordCompare.Instance.GetGreenIndex(), WordCompare.Instance.GetYellowIndex());
             ColorKeys(_keyBoardColoring.GreenList(), _keyBoardColoring.YellowList(), _keyBoardColoring.GreyList());
         }
