@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class WordManager : MonoBehaviour
 {
@@ -12,18 +13,21 @@ public class WordManager : MonoBehaviour
     [SerializeField] private TextBoxScript _boxScript4;
     [SerializeField] private TextBoxScript _boxScript5;
 
-    [Header("Other")]
+    [Header("Scripts")]
     [SerializeField] private KeyBoardColoring _keyBoardColoring;
     [SerializeField] private RandomWordSelect _randomWordSelect;
+
+    [Header ("Other")]
     [SerializeField] private string _targetWord;
     [SerializeField] private int _rowIndex;
     List<TextBoxScript> _rowList = new List<TextBoxScript>();
-    private string _currentGuess = "";
+    private string _currentGuess = string.Empty;
 
 
     private void Start()
     {
         _targetWord = _randomWordSelect.RandomWord();
+        EndMessage._correctWord = _targetWord;
         _rowList.Add(_boxScript1);
         _rowList.Add(_boxScript2);
         _rowList.Add(_boxScript3);
@@ -70,6 +74,24 @@ public class WordManager : MonoBehaviour
             ColorChanger(key, Color.green);
         }
     }
+    private void EnterModeSelect()
+    {
+        if (WordCompare.Instance.CheckWin())
+        {
+            EndMessage._didWin = true;
+            SceneManager.LoadScene(1);
+        }
+        else if (_rowIndex < _rowList.Count - 1)
+        {
+            _rowIndex++;
+            _currentGuess = "";
+        }
+        else
+        {
+            EndMessage._didWin = false;
+            SceneManager.LoadScene(1);
+        }
+    }
 
 
 
@@ -97,21 +119,7 @@ public class WordManager : MonoBehaviour
             WordCompare.Instance.Compare(_currentGuess, _targetWord);
             ColorBoxes(_rowList[_rowIndex].GetBoxList(), WordCompare.Instance.GetGreenIndex(), WordCompare.Instance.GetYellowIndex());
             ColorKeys(_keyBoardColoring.GreenList(), _keyBoardColoring.YellowList(), _keyBoardColoring.GreyList());
-        }
-
-        if (WordCompare.Instance.CheckWin())
-        {
-            Debug.Log("You Win");
-
-        }
-        else if (_rowIndex < _rowList.Count - 1)
-        {
-            _rowIndex++;
-            _currentGuess = "";
-        }
-        else
-        {
-            Debug.Log("You Lose");
+            EnterModeSelect();
         }
     }
 }
