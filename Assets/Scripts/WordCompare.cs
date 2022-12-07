@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,8 +33,7 @@ public class WordCompare : MonoBehaviour
     private List<char> StringToCharList(string word)
     {
         List<char> list = new List<char>();
-        string cleaned = word.Trim('\n', '\r', '\t');
-        foreach (char c in cleaned)
+        foreach (char c in word)
         {
             list.Add(char.ToUpper(c));
         }
