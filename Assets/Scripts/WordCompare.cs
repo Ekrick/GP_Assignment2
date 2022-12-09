@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class WordCompare : MonoBehaviour
 {
-    private static WordCompare _instance;
-    public static WordCompare Instance { get { return _instance; } }
 
     //Box Coloring
     List<int> _greenIndexList = new List<int>();
@@ -17,18 +15,6 @@ public class WordCompare : MonoBehaviour
 
     private bool _haveWon = false;
 
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
 
     private List<char> StringToCharList(string word)
     {

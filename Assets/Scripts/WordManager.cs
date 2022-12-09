@@ -13,6 +13,7 @@ public class WordManager : MonoBehaviour
     [SerializeField] private TextBoxScript _boxScript5;
 
     [Header("Scripts")]
+    [SerializeField] private WordCompare _wordCompare;
     [SerializeField] private KeyBoardColoring _keyBoardColoring;
     [SerializeField] private RandomWordSelect _randomWordSelect;
 
@@ -22,6 +23,10 @@ public class WordManager : MonoBehaviour
     List<TextBoxScript> _rowList = new List<TextBoxScript>();
     private string _currentGuess = string.Empty;
 
+    private void Awake()
+    {
+        _keyBoardColoring = GetComponentInChildren<KeyBoardColoring>();
+    }
 
     private void Start()
     {
@@ -75,7 +80,7 @@ public class WordManager : MonoBehaviour
     }
     private void EnterModeSelect()
     {
-        if (WordCompare.Instance.CheckWin())
+        if (_wordCompare.CheckWin())
         {
             EndMessage._didWin = true;
             SceneManager.LoadScene(1);
@@ -115,8 +120,8 @@ public class WordManager : MonoBehaviour
     {
         if (_rowList[_rowIndex].CheckFull())
         {
-            WordCompare.Instance.Compare(_currentGuess, _targetWord);
-            ColorBoxes(_rowList[_rowIndex].GetBoxList(), WordCompare.Instance.GetGreenIndex(), WordCompare.Instance.GetYellowIndex());
+            _wordCompare.Compare(_currentGuess, _targetWord);
+            ColorBoxes(_rowList[_rowIndex].GetBoxList(), _wordCompare.GetGreenIndex(), _wordCompare.GetYellowIndex());
             ColorKeys(_keyBoardColoring.GreenList(), _keyBoardColoring.YellowList(), _keyBoardColoring.GreyList());
             EnterModeSelect();
         }

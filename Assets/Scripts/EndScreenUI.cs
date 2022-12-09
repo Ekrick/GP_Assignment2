@@ -6,6 +6,7 @@ public class EndScreenUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textMessage;
     private string _upperCase;
+
     private void Start()
     {
         _upperCase = EndMessage._correctWord.ToUpper();

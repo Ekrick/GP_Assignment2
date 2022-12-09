@@ -4,7 +4,9 @@ using TMPro;
 
 public class KeyBoardColoring : MonoBehaviour
 {
+    [SerializeField] private WordCompare _wordCompare;
     List<GameObject> _keyList = new List<GameObject>();
+
 
     private void Start()
     {
@@ -31,15 +33,15 @@ public class KeyBoardColoring : MonoBehaviour
 
     public List<GameObject> GreenList()
     {
-        return ColorList(WordCompare.Instance.GetGreenLetters());
+        return ColorList(_wordCompare.GetGreenLetters());
     }
     public List<GameObject> YellowList()
     {
-        return ColorList(WordCompare.Instance.GetYellowLetters());
+        return ColorList(_wordCompare.GetYellowLetters());
     }
     public List<GameObject> GreyList()
     {
-        return ColorList(WordCompare.Instance.GetGreyLetters());
+        return ColorList(_wordCompare.GetGreyLetters());
     }
 
     private void AddChildren(GameObject obj)

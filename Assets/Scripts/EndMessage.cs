@@ -2,8 +2,8 @@
 public static class EndMessage
 {
 
-    public static string _correctWord;
-    public static bool _didWin;
+    public static string _correctWord = "placeholder";
+    public static bool _didWin = false;
 
 
 }

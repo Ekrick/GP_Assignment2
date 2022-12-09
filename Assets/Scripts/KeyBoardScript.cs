@@ -4,7 +4,11 @@ public class KeyBoardScript : MonoBehaviour
 {
     [SerializeField] private WordManager _wordManager;
 
-  
+    private void Awake()
+    {
+        _wordManager = GetComponentInParent<WordManager>();
+    }
+
     public void A_Click()
     {
         char click = 'A';
